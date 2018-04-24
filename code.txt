@@ -1,10 +1,16 @@
 exports.Show= function(req,res,next){
 
-    User.find().exec(function(err,members){
-        if (isActive = true)
-        {res.send(members)};
-    // if (isActive = false)
-    //     {console.log(req)}
+    User.find({'isActive': true}).exec(function(err,members){
+        // var resultMember = [];
+        // for (var i = 0; i < members.length; i++) {
+        //     if (members[i].isActive) {
+        //         resultMember.push(members[i]);
+        //     }
+        // }
+        // res.send(resultMember);
+
+        res.send(members);
+
 })}
 exports.Add=function(req,res,next)
 {
@@ -22,19 +28,28 @@ exports.Add=function(req,res,next)
         res.send(newUser)
         });
 }
+exports.Delete=function(req,res,next)
+{
+    User.findOne({_id: req.body._id}).exec(function(err,deleteUser){
+        console.log(deleteUser);
+        deleteUser.remove();
+    })
+}
 exports.Edit=function(req,res,next)
 {   
-    User.findOne({_id:req._id},function(err,editUser){
-    var t = req.body
-    var edit = User({
-        _id:t._id,
-        email: t.email,
-        first_name: t.first_name,
-        last_name:t.last_name,
-        password:t.password,
-        created: t.created
-        })
-    edit.save(function (err) {
+    User.findOne({_id:req.body._id},function(err,editUser){
+    var t = req.body;
+
+
+
+    editUser.email = t.email;
+    editUser.first_name = t.first_name;
+
+
+    editUser.save(function (err) {
         //if (err) return handleError(err);  
-        res.send(edit)
-        })})}
+        res.send(editUser)
+        }
+        )}
+    )
+}
