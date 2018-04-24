@@ -1,0 +1,40 @@
+exports.Show= function(req,res,next){
+
+    User.find().exec(function(err,members){
+        if (isActive = true)
+        {res.send(members)};
+    // if (isActive = false)
+    //     {console.log(req)}
+})}
+exports.Add=function(req,res,next)
+{
+    var t = req.body;
+    var newUser = new User({
+	    email: t.email,
+        first_name: t.first_name,
+        last_name:t.last_name,
+        password:t.password,
+        isActive:t.isActive,
+        created: t.created
+        })
+    newUser.save(function (err) {
+        if (err) return handleError(err);  
+        res.send(newUser)
+        });
+}
+exports.Edit=function(req,res,next)
+{   
+    User.findOne({_id:req._id},function(err,editUser){
+    var t = req.body
+    var edit = User({
+        _id:t._id,
+        email: t.email,
+        first_name: t.first_name,
+        last_name:t.last_name,
+        password:t.password,
+        created: t.created
+        })
+    edit.save(function (err) {
+        //if (err) return handleError(err);  
+        res.send(edit)
+        })})}
